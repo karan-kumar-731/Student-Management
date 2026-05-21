@@ -20,7 +20,7 @@ func main() {
 	// cors middleware
 	router.Use(func(c *gin.Context) {
 
-		c.Header("Access-Control-Allow-Origin", "http://localhost:5173")
+		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
 		c.Header("Access-Control-Allow-Credentials", "true")
