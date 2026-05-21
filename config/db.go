@@ -3,24 +3,33 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
 func Connect() {
-	constStr := "host=localhost port=5432 user=postgres password=karan dbname=studentdb sslmode=disable"
-	db, err := sql.Open("postgres", constStr)
+
+	godotenv.Load()
+
+	connStr := os.Getenv("DATABASE_URL")
+
+	db, err := sql.Open("postgres", connStr)
+
 	if err != nil {
 		panic(err)
 	}
+
 	err = db.Ping()
+
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println("---------- db connected successfully -----")
 
 	DB = db
-
 }
