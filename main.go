@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"student-crud/config"
 	"student-crud/routes"
 
@@ -9,9 +10,16 @@ import (
 )
 
 func main() {
+
+	// connect database
 	config.Connect()
+
+	// create gin router
 	router := gin.Default()
+
+	// cors middleware
 	router.Use(func(c *gin.Context) {
+
 		c.Header("Access-Control-Allow-Origin", "http://localhost:5173")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
@@ -24,8 +32,17 @@ func main() {
 
 		c.Next()
 	})
+
+	// routes
 	routes.StudentsRoutes(router)
 
-	router.Run(":8080")
+	// render dynamic port
+	port := os.Getenv("PORT")
 
+	if port == "" {
+		port = "8080"
+	}
+
+	// run server
+	router.Run(":" + port)
 }
