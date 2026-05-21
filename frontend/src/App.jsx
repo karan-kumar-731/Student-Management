@@ -16,7 +16,7 @@ const emptyForm = {
 
 function StudentList({ students, loading, error, message, onRefresh, onAdd, onEdit, onDelete }) {
   return (
-    <section className="rounded-3xl border border-white/60 bg-white/85 p-6 shadow-glow backdrop-blur lg:p-8">
+    <section className="surface-card page-enter p-6 lg:p-8">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold">Students List</h2>
@@ -26,14 +26,14 @@ function StudentList({ students, loading, error, message, onRefresh, onAdd, onEd
           <button
             type="button"
             onClick={onRefresh}
-            className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-sky-200 hover:text-sky-700"
+            className="secondary-button"
           >
             Refresh
           </button>
           <button
             type="button"
             onClick={onAdd}
-            className="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+            className="primary-button"
           >
             Add new student
           </button>
@@ -41,28 +41,28 @@ function StudentList({ students, loading, error, message, onRefresh, onAdd, onEd
       </div>
 
       {error ? (
-        <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
+        <div className="notice-error">
           {error}
         </div>
       ) : null}
 
       {message ? (
-        <div className="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700">
+        <div className="notice-success">
           {message}
         </div>
       ) : null}
 
       {loading ? (
-        <div className="rounded-3xl border border-dashed border-slate-200 p-12 text-center text-slate-500">
+        <div className="empty-state">
           Loading students...
         </div>
       ) : students.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-slate-200 p-12 text-center text-slate-500">
+        <div className="empty-state">
           No students added yet. Click Add new student to create the first record.
         </div>
       ) : (
-        <div className="overflow-hidden rounded-3xl border border-slate-200">
-          <div className="hidden grid-cols-[1fr_1fr_0.5fr_0.8fr] bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-600 md:grid">
+        <div className="table-shell">
+          <div className="table-head hidden grid-cols-[1fr_1fr_0.5fr_0.8fr] px-5 py-3 text-sm font-semibold text-white md:grid">
             <div>Name</div>
             <div>Email</div>
             <div>Age</div>
@@ -70,10 +70,7 @@ function StudentList({ students, loading, error, message, onRefresh, onAdd, onEd
           </div>
           <div className="divide-y divide-slate-200 bg-white">
             {students.map((student) => (
-              <div
-                key={student.id}
-                className="grid gap-4 px-5 py-4 md:grid-cols-[1fr_1fr_0.5fr_0.8fr] md:items-center"
-              >
+              <div key={student.id} className="table-row md:grid-cols-[1fr_1fr_0.5fr_0.8fr] md:items-center">
                 <div>
                   <div className="text-sm font-semibold uppercase tracking-wide text-slate-400 md:hidden">
                     Name
@@ -96,14 +93,14 @@ function StudentList({ students, loading, error, message, onRefresh, onAdd, onEd
                   <button
                     type="button"
                     onClick={() => onEdit(student.id)}
-                    className="rounded-xl border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-700 transition hover:bg-sky-100"
+                    className="accent-button"
                   >
                     Update
                   </button>
                   <button
                     type="button"
                     onClick={() => onDelete(student)}
-                    className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100"
+                    className="danger-button"
                   >
                     Delete
                   </button>
@@ -130,7 +127,7 @@ function StudentForm({
   onReset
 }) {
   return (
-    <section className="rounded-3xl border border-white/60 bg-white/85 p-6 shadow-glow backdrop-blur lg:p-8">
+    <section className="surface-card page-enter p-6 lg:p-8">
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold">
@@ -143,33 +140,30 @@ function StudentForm({
         <button
           type="button"
           onClick={onBack}
-          className="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-sky-200 hover:text-sky-700"
+          className="secondary-button"
         >
           Back to list
         </button>
       </div>
 
       {error ? (
-        <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
+        <div className="notice-error">
           {error}
         </div>
       ) : null}
 
       {message ? (
-        <div className="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700">
+        <div className="notice-success">
           {message}
         </div>
       ) : null}
 
       {formLoading ? (
-        <div className="rounded-3xl border border-dashed border-slate-200 p-12 text-center text-slate-500">
+        <div className="empty-state">
           Loading student details...
         </div>
       ) : (
-        <form
-          onSubmit={onSubmit}
-          className="max-w-2xl rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
-        >
+        <form onSubmit={onSubmit} className="form-panel">
           <div className="grid gap-4">
             <label className="grid gap-2">
               <span className="text-sm font-semibold text-slate-700">Name</span>
@@ -178,7 +172,7 @@ function StudentForm({
                 value={form.name}
                 onChange={onChange}
                 placeholder="Enter student name"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+                className="input-field"
               />
             </label>
 
@@ -190,7 +184,7 @@ function StudentForm({
                 value={form.email}
                 onChange={onChange}
                 placeholder="Enter email address"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+                className="input-field"
               />
             </label>
 
@@ -203,7 +197,7 @@ function StudentForm({
                 value={form.age}
                 onChange={onChange}
                 placeholder="Enter age"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 outline-none ring-0 transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100"
+                className="input-field"
               />
             </label>
           </div>
@@ -212,14 +206,14 @@ function StudentForm({
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+              className="primary-button disabled:cursor-not-allowed disabled:opacity-70"
             >
               {submitting ? 'Saving...' : editingId !== null ? 'Update Student' : 'Add Student'}
             </button>
             <button
               type="button"
               onClick={onReset}
-              className="rounded-2xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:border-slate-300"
+              className="secondary-button"
             >
               Reset
             </button>
@@ -360,31 +354,34 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#e0f2fe_0,_#f8fafc_35%,_#f1f5f9_100%)] text-slate-900">
+    <div className="app-shell text-slate-900">
+      <span className="bg-orb bg-orb-a" />
+      <span className="bg-orb bg-orb-b" />
+      <span className="bg-orb bg-orb-c" />
       <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-8 px-4 py-10 lg:px-8">
-        <section className="overflow-hidden rounded-3xl border border-white/60 bg-white/85 shadow-glow backdrop-blur">
+        <section className="hero-card page-enter">
           <div className="grid gap-8 p-6 lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
             <div className="space-y-5">
-              <span className="inline-flex rounded-full bg-sky-100 px-4 py-1 text-sm font-semibold text-sky-700">
+              <span className="eyebrow">
                 Student CRUD Dashboard
               </span>
               <div className="space-y-3">
-                <h1 className="max-w-2xl text-4xl font-black tracking-tight sm:text-5xl">
+                <h1 className="headline">
                   Manage students from one clean screen.
                 </h1>
-                <p className="max-w-2xl text-base leading-7 text-slate-600">
+                <p className="body-copy">
                   View every student, add new records, update existing details, and remove entries
                   with a simple flow powered by your Go API.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 text-sm">
-                <div className="rounded-2xl bg-slate-900 px-4 py-3 font-medium text-white">
+                <div className="stat-pill">
                   {students.length} total students
                 </div>
                 <button
                   type="button"
                   onClick={view === 'list' ? openCreateForm : backToList}
-                  className="rounded-2xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-700 transition hover:border-sky-200 hover:text-sky-700"
+                  className="secondary-button"
                 >
                   {view === 'list' ? 'Add new student' : 'Back to list'}
                 </button>
